@@ -105,7 +105,7 @@ def generatePnPFile(feeders):
         
         
 
-    componentTypes =[]
+    componentTypes = []
 
     # Analyze component types/feeder requirements
     print('\nScanning Input File . . .')
@@ -202,12 +202,12 @@ def generatePnPFile(feeders):
                 
                 # skip any components not for the production layer
                 if not(row[2].strip('"') == productionLayer):
-                    print("Skipped {:<8} Non-production-layer component".format(row[0].strip('"')))
+                    print("Skipped {:<10} Non-production-layer component".format(row[0].strip('"')))
                     continue
                 
                 # skip any components without a feeder
                 elif not(components[row[1].strip('"')]):
-                    print("Skipped {:<8} No Feeder".format(row[0].strip('"')))
+                    print("Skipped {:<10} No Feeder".format(row[0].strip('"')))
                     continue
                 
                 # component placements
@@ -231,36 +231,40 @@ def generatePnPFile(feeders):
 def editFeeders(feeders):
     while(1):
         showFeeders(feeders)
-        print('\nAdd new feeder, edit feeder, delete, or quit? (new, edit, delete, quit)')
+        print('Edit Feeders\nOptions: new, edit, delete, duplicate, quit')
         inputString = input()
         
         if inputString == 'new' or inputString == 'n':
             print('Enter feeder name:')
             key = input()   
             feeders[key] = newFeeder(key)                    # add feeder
+            saveFeeders(feeders)
         elif inputString == 'edit' or inputString == 'e':
             print('Enter feeder name:')
             key = input()   
-            print('Config for feeder '+key)
+            print('Config for feeder '+key+':')
             print('Stack number, x-offset, y-offset, rotation, feed rate, nozzle')
             print('{:<12}, {:<8}, {:<8}, {:<8}, {:<9}, {:<6}'.format(*feeders[key]))
             feeders[key] = newFeeder(key)                    # change feeder
+            saveFeeders(feeders)
         elif inputString == 'delete' or inputString == 'd':
             print('Enter feeder name:')
             key = input()   
             feeders.pop(key, None)
+            saveFeeders(feeders)
         elif inputString == 'duplicate' or inputString == 'dup':
             print('Enter name of feeder to duplicate:')
             key = input()
             print('Enter new feeder name:')
             newKey = input()
             feeders[newKey] = feeders[key]
+            saveFeeders(feeders)
         elif inputString == 'quit' or inputString == 'q':
             return
         else:
             print('Invalid command')
         
-        saveFeeders(feeders)
+        
 
 
 feeders = loadFeeders()
