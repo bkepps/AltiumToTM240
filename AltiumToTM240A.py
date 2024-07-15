@@ -58,13 +58,15 @@ def loadFeeders():
         feedersFile = open('feeders.json', 'r')
     except:
         print('No feeder config file found (feeders.json)')
+        print('Creating empty feeders.json. Ctrl-c to cancel')
         feeders = {}
     else:
         print('Loaded feeder config.')
         try: 
             feeders = json.load(feedersFile)
         except:
-            print('Error loading feeder config, feeders.csv may be empty')
+            print('Error loading feeder config, feeders.json may be empty')
+            print('Creating new feeder config. Any old feeders.json will be overwritten. Ctrl-c to cancel')
             feeders = {}
         else:
             # show user currently loaded feeders
@@ -131,7 +133,7 @@ def generatePnPFile(feeders):
     components = dict.fromkeys(componentTypes)  # dictionary with one key for each component type
 
 
-    # Attempt to match components to feeders
+    # Attempt to match components to feeders. Get user input for components that can't be matched
     for key in components:
         try:
             components[key] = feeders[key]
@@ -161,7 +163,8 @@ def generatePnPFile(feeders):
     # generate output file
     print('\nGenerating Output File . . .')
     with open(inputFilename, 'r') as infile:
-        with open('output.csv', 'w') as outfile:    
+        print('Enter name for your output file. Name must end in ".csv" to be recognized by the pick and place.')
+        with open(input(), 'w') as outfile:    
             
             # Generate origin offset section
             outfile.write('%,OriginOffset,X,Y\n')
