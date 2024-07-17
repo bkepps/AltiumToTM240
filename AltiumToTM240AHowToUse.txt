@@ -1,0 +1,58 @@
+AltiumToTM240 is a program designed to prepare files for the TM240 pick and place machine.
+
+
+The first step for running AltiumToTM240 is to export your pick and place file from altium.
+In the pick and place export window it gives you a preview of the columns it will export along
+with several settings related to the export. The required output columns and thier order
+is given below:
+
+Designator, Comment, Layer, Footprint, Center-X(mm), Center-Y(mm), Rotation, Height(mm)
+
+Before hitting export you must also be sure to check Metric and CSV for the units and file type.
+
+
+Now you need to find AltiumToTM240 and the feeders.json that has the currently loaded feeders.
+If there are no feeders currently loaded onto the machine you will be okay not having a feeders.json.
+
+Run AltiumToTM240. You can run either the .py or the .exe version, but you will need python
+installed to run the .py version.
+
+
+
+The program flow is below with explanations for each question:
+
+
+--Generate pick and place file or edit feeders? (generate or edit, default: generate)
+Choose generate.
+
+--Enter your input file (Either full path or name of file in working directory, include file extension):
+For this step make sure your pick and place file from altium is in the same folder as AltiumToTM240, and
+enter the name of the file you exported from altium
+
+--Enter production layer (Check your csv for the layer name, default: TopLayer):
+Are you populating the top layer or bottom layer?
+
+Note: for the bottom layer you may need to select y-flip bottom side components. To avoid dealing 
+with this make your board so it only has components on the top side.
+
+--Enter required x-axis origin offset in mm (default: 0):
+--Enter required y-axis origin offset in mm (default: 0):
+Distance from bottom left corner of board holder to the origin of your PCB. Look at 
+your altium file to determine the origin of your PCB.
+
+
+
+At this point the program will search through your components and attempt to match
+the components on the layer your populating to feeders. If it fails to match any
+component type to a feeder it will give the following message:
+
+--[Component Name] not matched to an existing feeder
+--Add new feeder, match to feeder manually, or skip? (new, match, skip; default: skip)
+
+The name of the component listed (this name comes from the "comment" field for the component in altium)
+did not match any of the feeder names. If this component should be matched to a cerruently mounted feeder
+select match to manually specify the component you want placed, if you would like to add a feeder for
+this component select new, otherwise select skip and the component will not be placed.
+
+Ask a coach for help adding a new feeder.
+

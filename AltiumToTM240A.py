@@ -55,7 +55,7 @@ def showFeeders(feeders):
 def loadFeeders():
     # load feeder config
     try:
-        feedersFile = open('feeders.json', 'r')
+        feedersFile = open('AltiumToTM240Afeeders.json', 'r')
     except:
         print('No feeder config file found (feeders.json)')
         print('Creating empty feeders.json. Ctrl-c to cancel')
@@ -76,7 +76,7 @@ def loadFeeders():
 
 def saveFeeders(feeders):
     # save modified feeder data
-    with open('feeders.json', 'w') as feedersFile:
+    with open('AltiumToTM240A.json', 'w') as feedersFile:
         json.dump(feeders, feedersFile)
     print('Feeders Saved')
 
