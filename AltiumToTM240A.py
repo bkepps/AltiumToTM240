@@ -230,6 +230,8 @@ def generatePnPFile(feeders):
                 outfile.write(','.join(outrow) + '\n')
                 index = index + 1
     print('Output file successfully generated.\n')
+    print('Press the enter key to quit . . .')
+    input()
 
 def editFeeders(feeders):
     while(1):
